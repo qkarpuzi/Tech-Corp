@@ -63,3 +63,11 @@ class Company:
                 department.add_employee(employee)
 
             self.departments.append(department)
+
+    def remove_employee(self, emp_id):
+      for department in self.departments:
+          if department.remove_employee(emp_id):
+              return True
+          else:
+              return False
+      pass
