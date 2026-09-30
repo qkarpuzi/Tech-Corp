@@ -27,17 +27,20 @@ def main():
                 "Tipi (Developer/Manager/Accountant): "
             ).lower()
 
-            salary = float(input("Paga: "))
+            base_salary = float(input("Paga bazë: "))  # ishte "salary", s'i kalohej fare konstruktorit
 
             if company.find_department(department_name) is None:
                 company.add_department(Department(department_name))
 
             if employee_type == "developer":
-                employee = Developer(emp_id, name, salary)
+                bonus_rate = float(input("Bonus rate (p.sh. 0.1): "))  # mungonte fare
+                employee = Developer(emp_id, name, department_name, base_salary, bonus_rate)
             elif employee_type == "manager":
-                employee = Manager(emp_id, name, salary)
+                team_bonus = float(input("Team bonus: "))
+                employee = Manager(emp_id, name, department_name, base_salary, team_bonus)
             elif employee_type == "accountant":
-                employee = Accountant(emp_id, name, salary)
+                fixed_bonus = float(input("Fixed bonus: "))
+                employee = Accountant(emp_id, name, department_name, base_salary, fixed_bonus)
             else:
                 print("Tip i pavlefshem.")
                 continue

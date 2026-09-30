@@ -27,7 +27,7 @@ class Company:
     def search_employee(self, emp_id):
         for dept in self.departments:
             for employee in dept.list_employees():
-                if employee.emp_id == emp_id:
+                if employee.get_id == emp_id:  # ishte employee.emp_id, s'ekzistonte -> AttributeError
                     return employee
         return None
 
@@ -63,10 +63,3 @@ class Company:
                 department.add_employee(employee)
 
             self.departments.append(department)
-
-
-
-
-
-
-
