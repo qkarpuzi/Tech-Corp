@@ -90,5 +90,32 @@ def main():
             print("Zgjedhje e pavlefshme.")
 
 
-if __name__ == "__main__":
-    main()
+        if __name__ == "__main__":
+            main()
+
+        elif choice == '6':
+            emp_id = int(input('Shkruani ID-ne per fshirje: '))
+            removed = company.remove_employee(emp_id)
+            if removed:
+                    print("ID u fshi")
+            else:
+                  print("ID nuk u fshi")
+
+        elif choice == '7':
+             for department in company.departments:
+                print(department.name, '-',
+                department.py(), 'punonjes')
+
+        elif choice == '8':
+            print(company.generate_report())
+
+
+try:
+    base_salary = float(input('Paga baze: '))
+    if base_salary < 0:
+        print('Paga nuk mund te jete negative.')
+        pass
+except ValueError:
+    print('Ju lutem shkruani nje numer valid.')
+    pass
+
