@@ -17,57 +17,30 @@ class Department:
             "name": self.name,
             "employees": [e.to_dict() for e in self.employees],
         }
-# 1
+
     def remove_employee(self, emp_id):
         found = None
-        for self.employee in self.employees:
-            if self.employee.get_id() == emp_id:
-                found = self.employee
-                return True
+        for employee in self.employees:          # u rregullua: ishte "self.employee", krijonte atribut te panevojshem
+            if employee.get_id == emp_id:         # u rregullua: get_id eshte @property, s'therritet me ()
+                found = employee
+                break                              # u shtua: ndalon loop-in sapo gjendet
         if found is not None:
             self.employees.remove(found)
-            return False
-# 2
+            return True                            # u zhvendos: tani fshihet PARA se te kthehet True
+        return False                               # u rregullua: ishte i paarritshem, tani ekzekutohet gjithmone ne rastin "s'u gjet"
+
     def total_salary(self):
         total = 0
         for employee in self.employees:
-            total += employee.get_salary()
+            total += employee.calculate_salary()   # u rregullua: get_salary() s'ekzistonte fare
         return total
 
     def employee_count(self):
         return len(self.employees)
 
-# 3
-
-    @name.setter
-    def name(self, value):
-        if value.strip() == '':
-             raise ValueError('Emri nuk mund te jete bosh')
-        self.__name = value
-
-    def __init__(self, id, name, department, base_salary):
-        if id is None or id < 0:
-            raise ValueError('ID e pavlefshme')
-        self.__id = id
-
-# 4
     def find_by_name(self, name):
         results = []
         for employee in self.employees:
             if name.lower() in employee.name.lower():
                 results.append(employee)
-                return results
-
-
-# 5
-
-from department import Department 
-from Employee import Developer, Manager 
-it = Department('IT') 
-it.add_employee(Developer(1, 'Ajla', 'IT', 1200, 0.1)) 
-it.add_employee(Manager(2, 'Omer', 'IT', 1500, 200)) 
-print('Total paga:', it.total_salary())  
-print('Numri i punonjesve:', it.employee_count()) 
-print('Kerkim "ajl":', it.find_by_name('ajl')) 
-it.remove_employee(1)
-print('Pas fshirjes:', it.employee_count())
+        return results                              # u rregullua: ishte brenda for-it, kthente vetem 1 rezultat
