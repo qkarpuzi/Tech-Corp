@@ -59,10 +59,10 @@ class Company:
     def remove_employee(self, emp_id):
         for department in self.departments:
             if department.remove_employee(emp_id):
-                return True                      # u rregullua: kthehet vetem KUR gjendet, jo per çdo departament
-        return False                              # u zhvendos jashte for-it: kontrollohen te GJITHE departamentet perpara se te thuhet "s'u gjet"
+                return True
+        return False
 
-    def generate_report(self):                    # u shtua: mungonte fare, main.py e therriste te opsioni 8
+    def generate_report(self):
         lines = ['=== RAPORTI I PAGAVE - TechCorp ===']
         for department in self.departments:
             lines.append(f'Departamenti: {department.name}')
