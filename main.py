@@ -82,13 +82,57 @@ def main():
             company.load_data()
             print("Te dhenat u ngarkuan.")
 
+<<<<<<< Updated upstream
         elif choice == "0":
             company.save_data()
             print("Te dhenat u ruajten. Programi u mbyll.")
             break
+=======
+        elif choice == "7":                         # u zhvendos ketu: ishte i lidhur gabimisht pas if __name__
+            emp_id = int(input("Shkruani ID-ne per fshirje: "))
+            removed = company.remove_employee(emp_id)
+            if removed:
+                print("Punonjesi u fshi me sukses.")
+            else:
+                print("ID nuk u gjet.")
 
+        elif choice == "8":
+            if not company.departments:
+                print("Nuk ka departamente.")
+            else:
+                for department in company.departments:
+                    print(department.name, "-", department.employee_count(), "punonjes")  # u rregullua: ishte department.py()
+
+        elif choice == "9":
+            print(company.generate_report())
+
+        elif choice == '10':
+            emp_id = int(input('ID e punonjesit: '))
+            employee = company.search_employee(emp_id)
+            if employee is None:
+                print('Punonjesi nuk u gjet.')
+            continue
+        try:
+            percentage = float(input('Perqindja e rritjes (p.sh.0.1): '))
+            employee.update_salery()
+            print('Paga e re:', employee.base_salary)
+        except ValueError as e:
+            print(e)
+>>>>>>> Stashed changes
+
+        elif choice == '11':
+        top = company.get_top_earner()
+        if top is None:
+            print('Nuk ka ende punonjes ne sistem.')
         else:
-            print("Zgjedhje e pavlefshme.")
+            print(top.name, '-', top.calculate_salary())
+
+        elif choice == '12':
+        company.save_report('raporti.txt')
+            print('Raporti u ruajt ne raporti.txt') 
+
+
+
 
 
         if __name__ == "__main__":
