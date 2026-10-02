@@ -60,6 +60,12 @@ class Developer(Employee):
         d["bonus_rate"] = self.__bonus_rate
         return d
 
+    def __init__(self,id,name,departament,base_salary,bonus_rate):
+                super().__init__(id,name,departament,base_salary)
+                if bonus_rate < 0 or bonus_rate > base_salary:
+                    raise ValueError("bonus_rate duhet te jete 0-1") 
+                self.__bonus_rate = bonus_rate  
+
 
 class Manager(Employee):
     def __init__(self, id, name, departament, base_salary, team_bonus):

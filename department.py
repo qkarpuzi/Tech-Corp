@@ -56,6 +56,7 @@ class Department:
         for employee in self.employees:
             if name.lower() in employee.name.lower():
                 results.append(employee)
+<<<<<<< Updated upstream
                 return results
 
 
@@ -71,3 +72,29 @@ print('Numri i punonjesve:', it.employee_count())
 print('Kerkim "ajl":', it.find_by_name('ajl')) 
 it.remove_employee(1)
 print('Pas fshirjes:', it.employee_count())
+=======
+        return results                              # u rregullua: ishte brenda for-it, kthente vetem 1 rezultat
+# 1
+def give_raise(self, percentage):
+    if percentage < 0:
+        raise ValueError('Perqindja nuk mund te jete negative')
+    new_salary = self.__base_salary + (self.__base_salary * percentage)
+    self.__base_salary = new_salary
+# 2
+def get_highest_paid(self):
+    if not self.employees:
+        return None
+    best = self.employees
+    for employee in self.employees:
+          if employee.calculate_salary() > best.calculate_salary():
+            best = employee
+    return best 
+
+# 3
+def average_salary(self):
+    if self.employee_count() == 0:
+        return 0
+    return self.total_salary() / self.employee_count()
+
+ 
+>>>>>>> Stashed changes
