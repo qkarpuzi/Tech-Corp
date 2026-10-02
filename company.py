@@ -68,6 +68,17 @@ class Company:
       for department in self.departments:
           if department.remove_employee(emp_id):
               return True
-          else:
-              return False
+          return False
       pass
+
+
+    def generate_report(self):
+        lines = ['=== RAPORTI I PAGAVE - TechCorp ===']
+        for department in self.departments:
+            lines.append(f'Departamenti:{department.name}')
+        for employee in department.employees():
+            salary = employee.calculate_salary()
+            lines.append(f' {employee.name}: {salary}')
+            total = self.calculate_total_payroll()
+            lines.append(f'TOTALI I KOMPANISE: {total}')
+        return "\n".join(lines)
