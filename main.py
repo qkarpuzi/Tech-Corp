@@ -1,4 +1,5 @@
 from company import Company
+import company
 from department import Department
 from employee import Developer, Manager, Accountant
 
@@ -118,4 +119,3 @@ try:
 except ValueError:
     print('Ju lutem shkruani nje numer valid.')
     pass
-

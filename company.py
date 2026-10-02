@@ -82,3 +82,19 @@ class Company:
             total = self.calculate_total_payroll()
             lines.append(f'TOTALI I KOMPANISE: {total}')
         return "\n".join(lines)
+
+    def export_report_to_file(self, filepath='raporti.txt'):
+        report = self.generate_report()
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(report)
+        pass
+
+    def get_top_earner(self):
+            best = None
+            for department in self.departments:
+                candidate = department.get_top_earner()
+                if candidate is None:
+                    continue
+                if best is None or candidate.calculate_salary() > best.calculate_salary():
+                    best = candidate
+            return best
