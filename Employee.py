@@ -128,3 +128,15 @@ if __name__ == "__main__":
     print(dev3.calculate_salary())
     dept.add_employee(dev3)
     print(dept.list_employees())
+
+    @name.setter
+    def name(self,value):
+        if value.strip() == "":
+            raise ValueError('emri nuk  mund te jete bosh')
+        self._name = value
+
+    def __init__(self,id,name,departament,base_salary):
+        self.__id = id
+        self.__name = name
+        self.__departament = departament
+        self.__base_salary = base_salary

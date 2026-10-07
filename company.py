@@ -71,6 +71,17 @@ class Company:
             if department.remove_employee(emp_id):
                 return True
         return False
+    def transfer_employee(self, emp_id, new_department_name):
+        new_dept = self.find_department(new_department_name)
+        if new_dept is None:
+            raise ValueError(f"Departamenti '{new_department_name}' nuk ekziston.")
+        employee = self.search_employee(emp_id)
+        if employee is None:
+            raise ValueError('Punonjesi nuk u gjet.')
+        removed = self.remove_employee(emp_id)
+        if not removed:
+            raise ValueError('Transferimi deshtoi.')
+        new_dept.employee
 
     def generate_report(self):
         lines = ['=== RAPORTI I PAGAVE - TechCorp ===']

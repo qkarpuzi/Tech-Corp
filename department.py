@@ -54,3 +54,12 @@ class Department:
         if self.employee_count() == 0:
             return 0
         return self.total_salary() / self.employee_count()
+    
+    def sort_by_salary(self):
+        return sorted(self.employees, key=lambda e:
+                      e.calculate_salary(), reverse=True)
+    
+    def get_lowest_paid(self):
+        if not self.employees:
+            return None
+        return min(self.employees, key=lambda e: e.calculate_salary())
