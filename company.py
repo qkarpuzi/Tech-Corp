@@ -87,3 +87,9 @@ class Company:
         report = self.generate_report()
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(report)
+
+    def search_by_name(self, name):
+        results = []
+        for department in self.departments:
+            results.extend(department.search_employees_by_name(name))
+        return results
