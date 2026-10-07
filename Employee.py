@@ -6,7 +6,7 @@ class Employee(ABC):
         self.__id = id
         self.__name = name
         self.__departament = departament
-        self.__base_salary = base_salary  # u shtua: mungonte plotesisht, salary s'perdorej askund
+        self.__base_salary = base_salary
 
     @property
     def name(self):
@@ -24,7 +24,7 @@ class Employee(ABC):
     def get_id(self):
         return self.__id
 
-    @get_id.setter  # ishte @brand.setter, "brand" nuk ekzistonte fare -> NameError
+    @get_id.setter
     def get_id(self, value):
         if value == "":
             raise ValueError("id nuk mund te jete bosh")
@@ -34,10 +34,16 @@ class Employee(ABC):
     def calculate_salary(self):
         pass
 
+    def give_raise(self, percentage):
+        if percentage < 0:
+            raise ValueError('Perqindja nuk mund te jete negative')
+        new_salary = self.__base_salary + (self.__base_salary * percentage)
+        self.__base_salary = new_salary
+
     def __str__(self):
         return f"[{self.get_id}] {self.__name} - {self.__departament}"
 
-    def to_dict(self):  # u shtua: company.py e kerkon per save_data, mungonte fare
+    def to_dict(self):
         return {
             "type": type(self).__name__,
             "id": self.get_id,
@@ -50,21 +56,17 @@ class Employee(ABC):
 class Developer(Employee):
     def __init__(self, id, name, departament, base_salary, bonus_rate):
         super().__init__(id, name, departament, base_salary)
+        if bonus_rate < 0 or bonus_rate > 1:
+            raise ValueError("bonus_rate duhet te jete 0-1")
         self.__bonus_rate = bonus_rate
 
     def calculate_salary(self):
-        return self.base_salary + (self.base_salary * self.__bonus_rate)  # ishte bonus_rate * 1.85, base_salary s'perdorej
+        return self.base_salary + (self.base_salary * self.__bonus_rate)
 
     def to_dict(self):
         d = super().to_dict()
         d["bonus_rate"] = self.__bonus_rate
         return d
-
-    def __init__(self,id,name,departament,base_salary,bonus_rate):
-                super().__init__(id,name,departament,base_salary)
-                if bonus_rate < 0 or bonus_rate > base_salary:
-                    raise ValueError("bonus_rate duhet te jete 0-1") 
-                self.__bonus_rate = bonus_rate  
 
 
 class Manager(Employee):
@@ -73,7 +75,7 @@ class Manager(Employee):
         self.__team_bonus = team_bonus
 
     def calculate_salary(self):
-        return self.base_salary + self.__team_bonus  # ishte team_bonus * 1.85
+        return self.base_salary + self.__team_bonus
 
     def to_dict(self):
         d = super().to_dict()
@@ -81,13 +83,13 @@ class Manager(Employee):
         return d
 
 
-class Accountant(Employee):  # ishte "Accountat", prandaj main.py s'e gjente dot importin
+class Accountant(Employee):
     def __init__(self, id, name, departament, base_salary, fixed_bonus):
         super().__init__(id, name, departament, base_salary)
         self.__fixed_bonus = fixed_bonus
 
     def calculate_salary(self):
-        return self.base_salary + self.__fixed_bonus  # ishte fixed_bonus * 1.85
+        return self.base_salary + self.__fixed_bonus
 
     def to_dict(self):
         d = super().to_dict()
@@ -95,7 +97,7 @@ class Accountant(Employee):  # ishte "Accountat", prandaj main.py s'e gjente dot
         return d
 
 
-def employee_from_dict(data):  # u shtua: company.py e importon, mungonte fare
+def employee_from_dict(data):
     t = data["type"]
     if t == "Developer":
         return Developer(data["id"], data["name"], data["departament"], data["base_salary"], data["bonus_rate"])
@@ -107,19 +109,17 @@ def employee_from_dict(data):  # u shtua: company.py e importon, mungonte fare
         raise ValueError(f"tip i panjohur: {t}")
 
 
-# u leviz jashte klases dhe u mbrojt me if __name__ -- perpara ky kod vraponte
-# automatikisht sa here qe main.py apo company.py importonin employee.py
 if __name__ == "__main__":
     dev1 = Developer("E01", "Ana", "IT", 1000, bonus_rate=0.1)
     print(dev1.calculate_salary())
 
-    from department import Department  # ishte "Departemnt", klase qe s'ekzistonte fare
+    from department import Department
 
     dept = Department("IT")
     dept.add_employee(dev1)
-    print(dept.list_employees())  # ishte list__employess(), emer i gabuar
+    print(dept.list_employees())
 
-    dev2 = Manager("E02", "Ajla", "IT", 1200, team_bonus=200)  # ishte bonus_rate=0.2, Manager s'ka bonus_rate
+    dev2 = Manager("E02", "Ajla", "IT", 1200, team_bonus=200)
     print(dev2.calculate_salary())
     dept.add_employee(dev2)
     print(dept.list_employees())

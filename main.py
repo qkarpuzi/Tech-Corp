@@ -1,5 +1,4 @@
 from company import Company
-import company
 from department import Department
 from employee import Developer, Manager, Accountant
 
@@ -16,25 +15,32 @@ def main():
         print("4. Shiko departamentet")
         print("5. Ruaj te dhenat")
         print("6. Ngarko te dhenat")
+        print("7. Fshi punonjes")
+        print("8. Numri i punonjesve per departament")
+        print("9. Raporti i pagave")
+        print("10. Jep rritje page")
+        print("11. Punonjesi me i lartepaguar")
+        print("12. Eksporto raportin ne file")
         print("0. Dil")
 
         choice = input("Zgjedh: ")
 
         if choice == "1":
-            emp_id = input("ID: ")
+            try:
+                emp_id = int(input("ID: "))
+            except ValueError:
+                print("ID duhet te jete numer.")
+                continue
             name = input("Emri: ")
             department_name = input("Departamenti: ")
-            employee_type = input(
-                "Tipi (Developer/Manager/Accountant): "
-            ).lower()
-
-            base_salary = float(input("Paga bazë: "))  # ishte "salary", s'i kalohej fare konstruktorit
+            employee_type = input("Tipi (Developer/Manager/Accountant): ").lower()
+            base_salary = float(input("Paga baze: "))
 
             if company.find_department(department_name) is None:
                 company.add_department(Department(department_name))
 
             if employee_type == "developer":
-                bonus_rate = float(input("Bonus rate (p.sh. 0.1): "))  # mungonte fare
+                bonus_rate = float(input("Bonus rate (p.sh. 0.1): "))
                 employee = Developer(emp_id, name, department_name, base_salary, bonus_rate)
             elif employee_type == "manager":
                 team_bonus = float(input("Team bonus: "))
@@ -53,7 +59,11 @@ def main():
                 print(e)
 
         elif choice == "2":
-            emp_id = input("Jep ID-ne e punonjesit: ")
+            try:
+                emp_id = int(input("Jep ID-ne e punonjesit: "))
+            except ValueError:
+                print("ID duhet te jete numer.")
+                continue
             employee = company.search_employee(emp_id)
 
             if employee:
@@ -82,14 +92,12 @@ def main():
             company.load_data()
             print("Te dhenat u ngarkuan.")
 
-<<<<<<< Updated upstream
-        elif choice == "0":
-            company.save_data()
-            print("Te dhenat u ruajten. Programi u mbyll.")
-            break
-=======
-        elif choice == "7":                         # u zhvendos ketu: ishte i lidhur gabimisht pas if __name__
-            emp_id = int(input("Shkruani ID-ne per fshirje: "))
+        elif choice == "7":
+            try:
+                emp_id = int(input("Shkruani ID-ne per fshirje: "))
+            except ValueError:
+                print("ID duhet te jete numer.")
+                continue
             removed = company.remove_employee(emp_id)
             if removed:
                 print("Punonjesi u fshi me sukses.")
@@ -101,65 +109,47 @@ def main():
                 print("Nuk ka departamente.")
             else:
                 for department in company.departments:
-                    print(department.name, "-", department.employee_count(), "punonjes")  # u rregullua: ishte department.py()
+                    print(department.name, "-", department.employee_count(), "punonjes")
 
         elif choice == "9":
             print(company.generate_report())
 
         elif choice == '10':
-            emp_id = int(input('ID e punonjesit: '))
+            try:
+                emp_id = int(input('ID e punonjesit: '))
+            except ValueError:
+                print("ID duhet te jete numer.")
+                continue
             employee = company.search_employee(emp_id)
             if employee is None:
                 print('Punonjesi nuk u gjet.')
-            continue
-        try:
-            percentage = float(input('Perqindja e rritjes (p.sh.0.1): '))
-            employee.update_salery()
-            print('Paga e re:', employee.base_salary)
-        except ValueError as e:
-            print(e)
->>>>>>> Stashed changes
+                continue
+            try:
+                percentage = float(input('Perqindja e rritjes (p.sh. 0.1): '))
+                employee.give_raise(percentage)
+                print('Paga e re:', employee.base_salary)
+            except ValueError as e:
+                print(e)
 
         elif choice == '11':
-        top = company.get_top_earner()
-        if top is None:
-            print('Nuk ka ende punonjes ne sistem.')
-        else:
-            print(top.name, '-', top.calculate_salary())
+            top = company.get_top_earner()
+            if top is None:
+                print('Nuk ka ende punonjes ne sistem.')
+            else:
+                print(top.name, '-', top.calculate_salary())
 
         elif choice == '12':
-        company.save_report('raporti.txt')
-            print('Raporti u ruajt ne raporti.txt') 
+            company.export_report_to_file('raporti.txt')
+            print('Raporti u ruajt ne raporti.txt')
+
+        elif choice == "0":
+            company.save_data()
+            print("Te dhenat u ruajten. Programi u mbyll.")
+            break
+
+        else:
+            print("Opsion i pavlefshem.")
 
 
-
-
-
-        if __name__ == "__main__":
-            main()
-
-        elif choice == '6':
-            emp_id = int(input('Shkruani ID-ne per fshirje: '))
-            removed = company.remove_employee(emp_id)
-            if removed:
-                    print("ID u fshi")
-            else:
-                  print("ID nuk u fshi")
-
-        elif choice == '7':
-             for department in company.departments:
-                print(department.name, '-',
-                department.py(), 'punonjes')
-
-        elif choice == '8':
-            print(company.generate_report())
-
-
-try:
-    base_salary = float(input('Paga baze: '))
-    if base_salary < 0:
-        print('Paga nuk mund te jete negative.')
-        pass
-except ValueError:
-    print('Ju lutem shkruani nje numer valid.')
-    pass
+if __name__ == "__main__":
+    main()
