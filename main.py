@@ -1,6 +1,6 @@
 from company import Company
 from department import Department
-from employee import Developer, Manager, Accountant
+from Employee import Developer, Manager, Accountant
 
 
 def main():
