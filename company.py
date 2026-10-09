@@ -1,5 +1,5 @@
 import json
-from employee import employee_from_dict
+from Employee import employee_from_dict
 from department import Department
 
 
